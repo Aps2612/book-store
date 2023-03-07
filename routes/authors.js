@@ -1,15 +1,12 @@
-//this is author controlleer
-//it means he will send and recireve data from model and if data get successful then it will go to success view presentation else it will show error view presentation
-////import express and router variable of that express
 const express = require('express');
 const router = express.Router();
-//router is like app that lives inside main application
-//now we will create routes
-
+//this is author controlleer
+//it means he will send and recireve data from model and if data get successful then it will go to success view presentation else it will show error view presentation
+//import express and router variable of that express
 //we have to make different routes of author
 
-//1.all author route
 
+//1.all author route
 router.get('/',(req,res)=>{
     //i will try to fetch the data of all authors from database
     //db.users.find({ })
@@ -24,7 +21,7 @@ router.get('/new',(req,res)=>{
     res.render('authors/new')
 });
 
-//create author route
+//3.create author route
 router.post('/',(req,res)=>{
     res.send('Create');
 });
@@ -32,7 +29,7 @@ router.post('/',(req,res)=>{
 module.exports = router;
 
 
-//route or controllers will have a single file and in the views we have all the files for a single route controller
+//**route or controllers will have a single file and in the views we have all the files for a single route controller
 
 
 

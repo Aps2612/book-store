@@ -12,11 +12,19 @@
     <title>Mybrary</title>
 </head>
 <body>
-    Before 
-    <br>
-     <%-body %>
-    <br>
-    After
+    
+    <%- include('../partials/header.ejs')  %>
+    <%- body %>
+
 
 </body>
 </html>
+<% 
+//ye body ke andar ye ho raha hai ki express-ejs-layout import kiye hain to kuch bhi file render karni hogi pehle ye hogi
+//benefit - baar baar html boilerplate ni likhna padega 
+//code aur jaada modular ho jayega
+%>
+
+<% 
+//create a header in our application that we will use in layout page
+%>
