@@ -17,16 +17,18 @@ db.once('open',()=> console.log("connected to database"));
 app.set('view engine','ejs')
 
 app.set('views',__dirname+'/views')
-app.set('layouts','layouts/layout')
+app.set('layout','layouts/layout')
 
 app.use(expressLayout)
 //express.static() is used when want show some static file from some folder
 app.use(express.static('public'));
 
-const bookRouter = require('./routes/books');
+const indexRouter = require('./routes');
+const authorRouter = require('./routes/authors');
 //this is how we import
 //after require we write the path of our file 
-app.use('/',bookRouter)
+app.use('/',indexRouter)
+app.use('/authors',authorRouter);
 //isme jo pehla parameter hai wo decide karega path kya hoga
 //agr /books likha hota to routes me path /books/{route_path_name} check karega
 
