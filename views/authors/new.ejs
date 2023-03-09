@@ -1,6 +1,28 @@
-new author
+<h2>New Author</h2>
+
+<form  action ="/authors" method = "POST">
+<%- include('form_fields.ejs') %>
+<a href = "/authors">Cancel</a>
+<button type="submit">Create</button>
+</form>
+
+<%
+//type="submit" this will let know the server that 
+//this buttion is used for the purpose of submission of form
+%>
+ 
+
 
 <% 
-//main purpose here is to insert the authors intoi database
+//main purpose here is to insert the authors in the database
 %>
-new
+
+<% 
+//action will specify the url where data will be submitted once the user clicks on submit
+//method is POST here which means I have a new route with method post that will be used 
+//POST is used for the purpos eof creation
+ %>
+
+ <% 
+//make new single file for form input because it will be shared by both new and edit user
+%>
