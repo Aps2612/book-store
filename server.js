@@ -43,11 +43,10 @@ app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }));
 
 
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-mongoose.connect(process.env.mongodb);
-const db = mongoose.connection
-db.on('error',(error)=>console.error(error.meesage));
-db.once('open',()=> console.log("connected to database"));
+mongoose.connect("mongodb://127.0.0.1/subscribers",{ useNewUrlParser : true });
+const db =mongoose.connection
+db.on('error',(error) => console.log(error.message));
+db.once('open',()=> console.log("connected to database"));   
 //connect mongoose ,store in db,and handled both success and failure state
 //once means the firsttime it will connect it will run the function
 

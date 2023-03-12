@@ -9,11 +9,26 @@ const router = express.Router();
 //second line gives us access to author model by importing
 
 //1.all author route
-router.get('/',(req,res)=>{
+router.get('/', async (req,res)=>{
     //i will try to fetch the data of all authors from database
     //db.users.find({ })
-    res.render('authors/index');
-});
+    let searchOptions = { };
+    if(req.query.name != null && req.query.name !== " ")
+      searchOptions.name =  new RegExp(req.query.name , 'i');
+     try{
+       const authors = await Author.find(searchOptions);
+       res.render('authors/index' , { 
+        authors : authors, 
+        searchOptions: req.query
+     });
+     }
+     catch(err){
+        res.redirect('/');
+        }
+     });
+
+
+//Author is model here
 
 
 //2.new author route
@@ -24,18 +39,35 @@ router.get('/new',(req,res)=>{
 });
 //new Author create new author
 
-//3.create author route
-router.post('/',(req,res)=>{
-    res.send(req.body.name);
+
+router.post('/',async (req, res) => {
+    const author = new Author({
+        name: req.body.name
+    });
+    try{
+        const newAuthor = await author.save();
+       res.redirect('authors');
+    }
+    catch(err){
+        res.render('authors/new', {
+            author: author,
+            errorMessage: err.message
+        })
+    }
 });
+
+  
+
 //kewal iske liye pehle body-parser npm install karna pada
 //aur phir import kiya
 //app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }))
+//agar user id bheje to kahin wo  na reset ho jaaye isliye hum specify kar rahe above req.body.name
 
 module.exports = router;
 
 
 //**route or controllers will have a single file and in the views we have all the files for a single route controller
+//save is handled by promise and not by callback function 
 
 
 
@@ -57,3 +89,34 @@ module.exports = router
 //always remember to export this router so that our main file can get access to it
 //always look at what are the errors and act accordingly 
 
+
+
+// below is implemntaion of async await code in Promise.then
+//3.create author route
+// router.post('/', (req, res) => {
+//     const author = new Author({
+//         name: req.body.name
+//     });
+//     author.save()
+//         .then(() => {
+//             res.redirect('authors');
+//         })
+//         .catch((err) => {
+//             res.render('authors/new', {
+//                 author: author,
+//                 errorMessage: err.message
+//             })
+//         })
+// });
+
+
+//POST request send information through body while GET request sends information through query
+
+
+// let searchOptions = { };
+// if(req.query.name != NULL && req.query.name !== " ")
+//jab bhi search karte hai to aisa hi karna hota hai
+
+
+// searchOptions.name =  new RegExp(req.query.name , 'i');
+//Regexp usme madad karta hai jaise ay type karne par bhi ayush show hota hai aur i ka significance ye  hai ki ye case insensitive nahi rakhega search ko

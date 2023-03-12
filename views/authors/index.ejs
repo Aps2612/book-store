@@ -1,5 +1,23 @@
-all author
+<h2> Search Authors</h2> 
+<form action = "/authors" method = "GET">
+<label>Name</label>
+   
+    <input type = "text" name = "name" value= "<%= searchOptions.name%>">
+    <button type = "submit">Search</button>
+</form>
 
-<% 
-//main purpose here is to show all the authors from database
+
+<br>
+
+<% authors.forEach(author => { %>
+<div><%= author.name %></div>
+<% }) %>
+
+
+
+
+<%//label phir usko label kar ke band kar do%>
+
+<% //why did we use get
+//it is because I want this form to be displayed when i want to open so it is get%>
 %>
