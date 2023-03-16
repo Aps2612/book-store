@@ -42,6 +42,10 @@ app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }));
 //to stop above effect of layout, use {layout:false} as a seconde paramter where the file was rendered
 //express.static() is used when want show some static file from some folder in this case public
 //method_override allows us to take a post form,send that to our server with special parameter that tells us if we are doing a put or delete request
+//kewal iske liye pehle body-parser npm install karna pada
+//aur phir import kiya
+//app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }))
+//agar user id bheje to kahin wo  na reset ho jaaye isliye hum specify kar rahe above req.body.name
 
 
 

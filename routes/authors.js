@@ -1,5 +1,6 @@
 const express = require('express');
 const Author = require('../models/author');
+const Book = require('../models/book');
 const router = express.Router();
 //this is author controller
 //it means he will send and retrieve data from model and 
@@ -63,9 +64,23 @@ router.post('/',async (req, res) => {
 });
 
 //SHOW ROUTE
-router.get('/:id',(req,res)=>{
-   res.send(`Show author with  ${req.params.id}`);
-});
+router.get('/:id', async (req, res) => {
+    try {
+      const author = await Author.findById(req.params.id)
+      const books = await Book.find({ author: author.id }).limit(6).exec()
+      res.render('authors/show', {
+        author: author,
+        booksByAuthor: books
+      })
+    } catch(err) {
+      res.redirect('/')
+    }
+  })
+  //show.ejs is defined which will run in case of successfull attempt
+  //we get author and book variable to get both for them
+  //we can get author by find by id and will fail in case we dont get the author
+  //this will find all the books from database,liit it to first 6 books and execute the function
+  //if we get both book and author we render show and pass author and books to show.ejs
 
 //EDIT ROUTE
 router.get('/:id/edit', async (req, res) => {
@@ -123,27 +138,45 @@ router.put('/:id', async (req, res) => {
   //author.name = req.body.name saves the name before going to update page 
 
 
+ //DELETE ROUTE
+  router.delete('/:id', async (req, res) => {
+    let author
+    try {
+      author = await Author.findById(req.params.id)
+      await Author.deleteOne({_id: req.params.id});
+      res.redirect('/authors')
+    } catch(err) {
+      if (author == null) {
+        res.redirect('/')//this will work if we are not fetching author from database
+      } else {
+        console.log(err);
+        res.redirect(`/authors/${author.id}`)//this will work if there is problem in removing the author from database and we will be redirected to that author
+      }
+    }
+  })
+  //remove method will delete a author from database
+  //and after we delete we want to direct to all authors field so we can see all authors
+  //make sure to use beginning slash and also since we play with database here we use async await here
+
+ //Problem) what if we delete a author and that author is associated with some book
+ //solution) we need to set up a constraint that we cant delete an author if it is associated with some books otherewise we will have a book that refers to author which does not exist
+
+ //where do we set up the constraints?
+ //in the author model
 
 
-router.delete('/:id',(req,res)=>{
-    res.send('Delete author with');
-})
-//this is route for deleting the particular author
 
-//we cant directly use put or delete as a method so we need to install method-override
-//from the browser we can only make get or put request
   
 
-//kewal iske liye pehle body-parser npm install karna pada
-//aur phir import kiya
-//app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }))
-//agar user id bheje to kahin wo  na reset ho jaaye isliye hum specify kar rahe above req.body.name
 
 module.exports = router;
 
 
 //**route or controllers will have a single file and in the views we have all the files for a single route controller
 //save is handled by promise and not by callback function 
+
+//we cant directly use put or delete as a method so we need to install method-override
+//from the browser we can only make get or put request
 
 
 
