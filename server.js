@@ -20,6 +20,7 @@ const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes');
 const authorRouter = require('./routes/authors');
+const bookRouter = require('./routes/books');
 //this is how we import 
 //after require we write the path of our file
 
@@ -57,6 +58,7 @@ db.once('open',()=> console.log("connected to database"));
  
 app.use('/',indexRouter)
 app.use('/authors',authorRouter);
+app.use('/books',bookRouter);
 //isme jo pehla parameter hai wo decide karega path kya hoga
 //agr /authors likha hota to routes me path /authors/{route_path_name} check karega
 

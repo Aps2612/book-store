@@ -26,6 +26,12 @@ router.get('/', async (req,res)=>{
         res.redirect('/');
         }
      });
+//Author.find(searchOptions); yahan object kyon ni banaya because searchoption khud me hi ek object hai isliye {} karke likhni ki zarurat ni padi
+//ye jab jo searchoption wala kiye hai ye mongodb humko feature deta hai
+//get se info query ke form me aati hai
+//regExp ka matlab adha puna naam pe bhi pura naam dega aur i ka matlab case sensititity ni checkj karega
+//render me jo { key : value,key2:value2} karke jo  hejte hain wo ejs file me jaata hai aur wo use kar sakta hai
+//is case me usne as a value searchOption.name ko use kiya hai
 
 
 //Author is model here
@@ -45,7 +51,7 @@ router.post('/',async (req, res) => {
         name: req.body.name
     });
     try{
-        const newAuthor = await author.save();
+      const newAuthor = await author.save();
        res.redirect('authors');
     }
     catch(err){
