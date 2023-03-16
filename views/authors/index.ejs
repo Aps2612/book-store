@@ -10,8 +10,18 @@
 <br>
 
 <% authors.forEach(author => { %>
-<div><%= author.name %></div>
-<% }) %>
+    <div><%= author.name %></div>
+    <a href="/authors/<%= author.id %>">View</a>
+    <a href="/authors/<%= author.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm',
+                { url: `/authors/${author.id}` }) %>
+  <% }) %>
+
+<% //we pass the url to delete so that it is easy to deal with %> 
+<% // we can never use method get for delwting data becuase on doing so Google will go to every get route and will delete everything %>
+<% //NEVER EVER USE GET FOR DELETE%>
+<% //TO MAKE SURE WE USE DELETE REQUEST WE NEED TO USE A FORM AND IF WE USE ANCHOR TAG IT WILL GO WRONG %>
+
 
 
 

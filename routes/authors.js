@@ -62,6 +62,76 @@ router.post('/',async (req, res) => {
     }
 });
 
+//SHOW ROUTE
+router.get('/:id',(req,res)=>{
+   res.send(`Show author with  ${req.params.id}`);
+});
+
+//EDIT ROUTE
+router.get('/:id/edit', async (req, res) => {
+    try {
+      const author = await Author.findById(req.params.id)
+      res.render('authors/edit', { author: author })
+    } catch {
+      res.redirect('/authors')
+    }
+  })
+//editing route is almost similar to new but instead of creating new author we will get the author from database and edit it
+//whenever we have to fetch something from database we use async await function and write our code in tryu catch block
+//execute try if no error else catch error and show it
+
+
+
+//UPDATE ROUTE
+router.put('/:id', async (req, res) => {
+    let author
+    try {
+      author = await Author.findById(req.params.id)
+      author.name = req.body.name
+      await author.save()
+      res.redirect(`/authors/${author.id}`)
+    } catch {
+      if (author == null) {
+        res.redirect('/')
+      } else {
+        res.render('authors/edit', {
+          author: author,
+          errorMessage: 'Error updating Author'
+        })
+      }
+    }
+  })
+  //this is is similar as that of create route 
+  //here we dont want to create a new author 
+  //we want to get existing user and we can get it under try block by passing id
+  //we will use async function and will use await till we get the author id
+  //author = await Author.findById(req.params.id) will use mongoose database to get the user
+  //if everything is successfull we want to redirect to show page
+  //author.name = req.body.name
+  //await author.save() these to update 
+  //Q)why we have defined author variable outside the try block?You should have used const author instead
+  //Ans) It is because we have used that author variable inside catch block so we need to define it outside by let
+  // because code can fail twice-
+  //1.while getting author from database
+  //2.while saving author to database
+  //if author == null shows we failed at getting author from database and so we redirected to home page bcoz author does not exist 
+  //else condition shows we got author from database but were not able to save it to database 
+
+  //Q)what is difference between /authors and just 'authors'
+  //Ans) Just 'authors' withot slash at front means authors/authors here which is wrong so we do slash at front
+
+  //author.name = req.body.name saves the name before going to update page 
+
+
+
+
+router.delete('/:id',(req,res)=>{
+    res.send('Delete author with');
+})
+//this is route for deleting the particular author
+
+//we cant directly use put or delete as a method so we need to install method-override
+//from the browser we can only make get or put request
   
 
 //kewal iske liye pehle body-parser npm install karna pada

@@ -1,0 +1,13 @@
+<h2>Edit Author</h2>
+<form action="/authors/<%= author.id %>?_method=PUT" method="POST">
+  <%- include('form_fields') %>
+  <a href="/authors/<%= author.id %>">Cancel</a>
+  <button type="submit">Update</button>
+</form>  
+
+<% // _method=PUT" method="POST" since our browser can only get post and get method %>
+<% //writing ?_method=PUT" makes sure that we get redirected to put request %>
+<% //form_fields is same as present in partials %>
+<% //purpose of partial is that only it allows for code reusabiity %>
+<% //if we do cancel we get back to show page %>
+<% //if we click update it brings us to  update page %>

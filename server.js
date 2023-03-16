@@ -12,6 +12,7 @@ const express = require('express');
 const app = express();
 const expressLayout = require('express-ejs-layouts');
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 //import express and run express
 //ejs-layout ka yeh fayda hai ki baar baar boilerplate ni lagana padega HTML banate waqt
 //humko jo file render(render means to get) wo sidha  render kar denge
@@ -30,6 +31,7 @@ app.set('view engine','ejs')
 app.set('views',__dirname+'/views')
 app.set('layout','layouts/layout')
 app.use(expressLayout)
+app.use(methodOverride('_method'))
 app.use(express.static('public'));  
 app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }));
 //view engine is used for ejs file(ejs is a template engine)   
@@ -39,6 +41,7 @@ app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }));
 //it helps in code reusability
 //to stop above effect of layout, use {layout:false} as a seconde paramter where the file was rendered
 //express.static() is used when want show some static file from some folder in this case public
+//method_override allows us to take a post form,send that to our server with special parameter that tells us if we are doing a put or delete request
 
 
 
@@ -53,9 +56,6 @@ db.once('open',()=> console.log("connected to database"));
 
 
 
-
-
- 
 app.use('/',indexRouter)
 app.use('/authors',authorRouter);
 app.use('/books',bookRouter);
