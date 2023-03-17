@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
   try {
     const books = await query.exec()
     res.render('books/index', {
-      books: books,
+      books : books,
       searchOptions: req.query
     })
   } catch {
@@ -117,20 +117,98 @@ router.post('/',  async (req, res) => {
 // }
 
 
-
-async function renderNewPage(res, book, hasError = false) {
+//SHOW BOOK ROUTE
+router.get('/:id', async (req, res) => {
   try {
-    const authors = await Author.find({})
-    const params = {
-      authors: authors,
-      book: book
-    }
-    if (hasError == true)  params.errorMessage = 'error while books';
-    res.render('books/new', params)
-  } catch(err) {
-    res.redirect('/books')
+    const book = await Book.findById(req.params.id)
+                           .populate("author")
+                           .exec()
+    res.render('books/show', { book: book })
+  } catch(e) {
+    console.log(e.message);
+    res.redirect('/')
   }
-}
+})
+//think how can you get and show the book into page
+//we findi the book by id paramter
+//if it fails we redirect to home page
+//.populate(author) is a function that populate the author varaiable inside book object with all the information about author
+//'exec() will execute the fnction
+//once we have the book we will render show page and we will pass book in it
+//if we will go to browser none of our link will work so
+
+//EDIT BOOK ROUTE
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id)
+    renderEditPage(res, book)
+  } catch {
+    res.redirect('/')
+  }
+})
+
+//UPDATE BOOK ROUTE
+router.put('/:id', async (req, res) => {
+  let book
+
+  try {
+    book = await Book.findById(req.params.id)
+    book.title = req.body.title
+    book.author = req.body.author
+    book.publishDate = new Date(req.body.publishDate)
+    book.pageCount = req.body.pageCount
+    book.description = req.body.description
+    if (req.body.cover != null && req.body.cover !== '') {
+      saveCover(book, req.body.cover)
+    }
+    await book.save()
+    res.redirect(`/books/${book.id}`)
+  } catch {
+    if (book != null) {
+      renderEditPage(res, book, true)
+    } else {
+      res.redirect('/')
+    }
+  }
+})
+
+//DELETE BOOK ROUTE
+router.delete('/:id', async (req, res) => {
+  let book
+  try {
+    book = await Book.findById(req.params.id)
+    await book.deleteOne({_id: req.params.id});
+    res.redirect('/books')
+  } catch {
+    if (book != null) {
+      res.render('books/show', {
+        book: book,
+        errorMessage: 'Could not remove book'
+      })
+    } else {
+      res.redirect('/')
+    }
+  }
+})
+
+
+
+
+
+
+// async function renderNewPage(res, book, hasError = false) {
+//   try {
+//     const authors = await Author.find({})
+//     const params = {
+//       authors: authors,
+//       book: book
+//     }
+//     if (hasError == true)  params.errorMessage = 'error while books';
+//     res.render('books/new', params)
+//   } catch(err) {
+//     res.redirect('/books')
+//   }
+// }
 //The function begins by calling the Author.find() method to retrieve all authors from the MongoDB database using the Mongoose library.
 //This is an asynchronous operation, so the function uses await to wait for the operation to complete.
 //Once the authors are retrieved, the function creates a params object containing the authors array and the book object passed as an argument. 
@@ -141,6 +219,34 @@ async function renderNewPage(res, book, hasError = false) {
 //if there is an error during the rendering process, the user is redirected to the '/books' URL path.
 //book : book means here the key is book and value is also book
 //rendering of new page is done where book and author is passed
+
+async function renderNewPage(res, book, hasError = false) {
+  renderFormPage(res, book, 'new', hasError)
+}
+
+async function renderEditPage(res, book, hasError = false) {
+  renderFormPage(res, book, 'edit', hasError)
+}
+
+async function renderFormPage(res, book, form, hasError = false) {
+  try {
+    const authors = await Author.find({})
+    const params = {
+      authors: authors,
+      book: book
+    }
+    if (hasError) {
+      if (form === 'edit') {
+        params.errorMessage = 'Error Updating Book'
+      } else {
+        params.errorMessage = 'Error Creating Book'
+      }
+    }
+    res.render(`books/${form}`, params)
+  } catch {
+    res.redirect('/books')
+  }
+}
 
 function saveCover(book, coverEncoded) {
   if (coverEncoded == null) return

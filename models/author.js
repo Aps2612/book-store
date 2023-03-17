@@ -3,14 +3,14 @@
 //it sends back the response to the controller
 //it does not directly interact with view 
 
-const mongoose = require('mongoose');
-const Book = require('./book');
+const mongoose = require('mongoose')
+const Book = require('./book')
 
 const authorSchema = new mongoose.Schema({
-  name:{
-   type: String,
-   required:true
-  } 
+  name: {
+    type: String,
+    required: true
+  }
 })
 
 // authorSchema.pre('remove', function(next) {
@@ -71,4 +71,4 @@ authorSchema.pre("deleteOne", async function (next) {
 
 
 
-module.exports = mongoose.model("author",authorSchema);
+module.exports = mongoose.model("Author",authorSchema);

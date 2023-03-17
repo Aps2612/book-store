@@ -5,6 +5,23 @@
 <% if (booksByAuthor.length > 0) { %>
   <h2>Books By Author</h2>
   <% booksByAuthor.forEach(book => { %>
-    <img height="150" width="100" src="<%= book.coverImagePath %>">
+    <a href="/books/<%= book.id %>">
+      <img height="150" width="100" src="<%= book.coverImagePath %>">
+    </a>
   <% }) %>
 <% } %>
+
+<% // put author as a title in first line %>
+
+<% // want two buttons for Edit and delete%>
+
+<% //  title Books by author %>
+
+<% // then we will traverse the whole array and find all the books that author has and display it %>
+
+
+<%//{ url: `/authors/${author.id}` }) %>
+<% // above line refers to partials and used for deletion %>
+
+<% //booksByAuthor is a variable that contains book and was passed as a argument %>
+<%//if books doesnt have author we will not show BOOKSBYAUTHOR HEADING%>

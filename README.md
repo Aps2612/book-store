@@ -1,17 +1,9 @@
- //idea is to create search books page which has a title published after and published before text input fields
- //we will also have add book page which will allow us to add some book
- 
-
- <%
-//why we used underscore in front of the name
-//this is to specify that this is a partial file
-//we do not render it anywhere
-%>
-
-
-
-
-
-<% 
-//name acts as a key here
-%>
+- [x] Login with Activation
+- [ ] Single Sign on
+- [x] Private notes with ability to share and request access
+- [ ] Provide auto-complete of emails to share notes
+- [ ] Add sidebar for better visibility of notes
+- [ ] Add pagination
+- [ ] Send out email to admins in case of a new request
+- [ ] Add collaboration to notes
+- [ ] Add tabs to see notes you have access to
