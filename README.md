@@ -13,10 +13,10 @@
 
 ## Utilities
 
-- [ ] Add Author
-- [ ] See All Authors
-- [ ] Add Book
-- [ ] Get all the books
-- [ ] Perform CRUD on Authors and Books
-- [x] Feature to buy the book
+- [x] Add Author
+- [x] See All Authors
+- [x] Add Book
+- [x] Get all the books
+- [x] Perform CRUD on Authors and Books
+- [ ] Feature to buy the book
 
