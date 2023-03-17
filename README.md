@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-- [x] Login with Activation
-- [ ] Single Sign on
-- [x] Private notes with ability to share and request access
-- [ ] Provide auto-complete of emails to share notes
-- [ ] Add sidebar for better visibility of notes
-- [ ] Add pagination
-- [ ] Send out email to admins in case of a new request
-- [ ] Add collaboration to notes
-- [ ] Add tabs to see notes you have access to
-=======
 # BOOK STORE APP
 
 
@@ -28,4 +17,3 @@
 - [ ] Single Sign on
 - [x] Private notes with ability to share and request access
 
->>>>>>> 63d8b1a43985bf52ccc3eafedd3c8c275bb3706d
