@@ -13,7 +13,10 @@
 
 ## Utilities
 
-- [x] Login with Activation
-- [ ] Single Sign on
-- [x] Private notes with ability to share and request access
+- [ ] Add Author
+- [ ] See All Authors
+- [ ] Add Book
+- [ ] Get all the books
+- [ ] Perform CRUD on Authors and Books
+- [x] Feature to buy the book
 
