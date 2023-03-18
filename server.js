@@ -53,10 +53,11 @@ app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }));
 
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://mern-vercel:Yy1OGIPbMuGg4Mkd@cluster0.o1gh1fq.mongodb.net/?retryWrites=true&w=majority',{ useNewUrlParser : true });
+mongoose.connect(process.env.DATABASE_URL,{ useNewUrlParser : true });
 const db =mongoose.connection
 db.on('error',(error) => console.log(error.message));
 db.once('open',()=> console.log("connected to database"));   
+const port = process.env.PORT || 4000;
 //connect mongoose ,store in db,and handled both success and failure state
 //once means the firsttime it will connect it will run the function
 
@@ -69,7 +70,7 @@ app.use('/books',bookRouter);
 //agr /authors likha hota to routes me path /authors/{route_path_name} check karega
 
 
-app.listen(4000);
+app.listen(port);
 //listens on port number 4000
 //ye port no. reserved hote hain 
 //conventionally avoid karna chaiye ni to threat rehta hai data security ko
