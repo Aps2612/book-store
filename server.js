@@ -50,8 +50,10 @@ app.use(bodyParser.urlencoded({ limit : '10mb',extended : false }));
 
 
 
+
+
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://127.0.0.1/subscribers",{ useNewUrlParser : true });
+mongoose.connect('mongodb+srv://mern-vercel:Yy1OGIPbMuGg4Mkd@cluster0.o1gh1fq.mongodb.net/?retryWrites=true&w=majority',{ useNewUrlParser : true });
 const db =mongoose.connection
 db.on('error',(error) => console.log(error.message));
 db.once('open',()=> console.log("connected to database"));   
